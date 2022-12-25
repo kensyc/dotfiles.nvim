@@ -29,3 +29,7 @@ vim.cmd.colorscheme("catppuccin-mocha") -- latte, frappe, macchiato, mocha
 
 -- rose pine
 -- vim.cmd.colorscheme('rose-pine')
+
+return {
+    lualine_theme = 'catppuccin'
+}

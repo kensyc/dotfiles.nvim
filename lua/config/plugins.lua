@@ -36,9 +36,14 @@ require('packer').startup(function(use)
         },
     }
 
-
     -- Telescope
-    use { 'nvim-telescope/telescope.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+    use {
+        'nvim-telescope/telescope.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'debugloop/telescope-undo.nvim'
+        }
+    }
     use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
     use { 'nvim-telescope/telescope-file-browser.nvim' }
 
@@ -72,6 +77,7 @@ require('packer').startup(function(use)
     -- Git
     use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
 
+    -- validated untill here
     -- Utility
     use 'numToStr/Comment.nvim'
     use 'kylechui/nvim-surround'

@@ -7,9 +7,6 @@ vim.keymap.set("v", "<leader>p", '"_dP')
 
 vim.keymap.set("n", "<leader>cd", "<cmd>cd %:p:h<CR>")
 
--- TODO: nohl keymap
---
-
 -- Files tree keymaps
 vim.keymap.set("n", "<leader>n", "<cmd>NvimTreeToggle<CR>")
 vim.keymap.set("n", "<leader>nr", "<cmd>NvimTreeRefresh<CR>")
@@ -49,14 +46,32 @@ vim.keymap.set("n", "<leader>b", require("telescope.builtin").buffers)
 vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles)
 
 vim.keymap.set("n", "<leader>ff", require("telescope.builtin").find_files)
-vim.keymap.set("n", "<leader>fz", require("telescope.builtin").current_buffer_fuzzy_find)
+vim.keymap.set("n", "<leader>fz",
+    function()
+        require("telescope.builtin").current_buffer_fuzzy_find(
+            require('telescope.themes').get_dropdown {
+                windblend = 10,
+                previewer = false,
+            }
+        )
+    end
+)
 vim.keymap.set("n", "<leader>fw", require("telescope.builtin").grep_string)
 vim.keymap.set("n", "<leader>fp", require("telescope.builtin").live_grep)
--- vim.keymap.set('n', '<leader>f', '<cmd>Telescope file_browser<CR>')
+vim.keymap.set('n', '<leader>fb', '<cmd>Telescope file_browser<CR>')
+vim.keymap.set("n", "<leader>u", '<cmd>Telescope undo<CR>')
 
 vim.keymap.set("n", "<leader>td", require("telescope.builtin").help_tags)
 vim.keymap.set("n", "<leader>tp", require("telescope.builtin").tags)
 vim.keymap.set("n", "<leader>tf", require("telescope.builtin").current_buffer_tags)
+
+local undo_mappings = {
+    i = {
+        ["<CR>"] = require("telescope-undo.actions").yank_additions,
+        ["<S-CR>"] = require("telescope-undo.actions").yank_deletions,
+        ["<C-CR>"] = require("telescope-undo.actions").restore,
+    }
+}
 
 -- Diagnostics
 vim.keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.open_float()<CR>")
@@ -118,8 +133,50 @@ local cmp_keys = {
     end, { "i", "s" }),
 }
 
+local gitsigns_on_attach = function(bufnr)
+    local gs = package.loaded.gitsigns
+
+    local function map(mode, l, r, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        vim.keymap.set(mode, l, r, opts)
+    end
+
+    -- Navigation
+    map('n', ']c', function()
+        if vim.wo.diff then return ']c' end
+        vim.schedule(function() gs.next_hunk() end)
+        return '<Ignore>'
+    end, { expr = true })
+
+    map('n', '[c', function()
+        if vim.wo.diff then return '[c' end
+        vim.schedule(function() gs.prev_hunk() end)
+        return '<Ignore>'
+    end, { expr = true })
+
+    -- Actions
+    map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>')
+    map({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>')
+    map('n', '<leader>hS', gs.stage_buffer)
+    map('n', '<leader>hu', gs.undo_stage_hunk)
+    map('n', '<leader>hR', gs.reset_buffer)
+    map('n', '<leader>hp', gs.preview_hunk)
+    map('n', '<leader>hB', function() gs.blame_line { full = true } end)
+    map('n', '<leader>hb', gs.toggle_current_line_blame)
+    map('n', '<leader>hd', gs.diffthis)
+    map('n', '<leader>hD', function() gs.diffthis('~') end)
+    map('n', '<leader>ht', gs.toggle_deleted)
+
+    -- Text object
+    map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+end
+
+
 return {
     on_attach = on_attach,
     cmp_keys = cmp_keys,
     treesitter_keymaps = treesitter_keymaps,
+    undo_mappings = undo_mappings,
+    gitsigns_on_attach = gitsigns_on_attach,
 }
