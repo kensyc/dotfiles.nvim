@@ -1,0 +1,6 @@
+require('config.options')
+require('config.keymaps')
+require('config.cmd')
+require('config.theme')
+require('config.diagnostics')
+require('config.plugins')
