@@ -1,6 +1,6 @@
 require('config.options')
+require('config.plugins')
 require('config.keymaps')
 require('config.cmd')
-require('config.theme')
 require('config.diagnostics')
-require('config.plugins')
+require('config.theme')

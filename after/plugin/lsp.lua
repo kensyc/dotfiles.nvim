@@ -1,6 +1,11 @@
 require("neodev").setup()
 
+-- @todo: ensure_installed has a limited server list to auto install
+-- a lot of linters, formatters, etc need to be manually installed
+-- @todo: expand servers object with lsp's that are available
+-- linters/formatters: shellcheck, hadolint, black, isort shfmt, yamllint
 local servers = {
+    bashls = {},
     pyright = {
         python = {
             analysis = {

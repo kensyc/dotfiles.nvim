@@ -7,10 +7,25 @@ vim.keymap.set("v", "<leader>p", '"_dP')
 
 vim.keymap.set("n", "<leader>cd", "<cmd>cd %:p:h<CR>")
 
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
+
+-- stay at start of the line after J (merges line below with current line)
+vim.keymap.set("n", "J", "mzJ`z")
+
+-- center screen after scrolling or going through search results
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-f>", "<C-f>zz")
+vim.keymap.set("n", "<C-b>", "<C-b>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
+
 -- Files tree keymaps
-vim.keymap.set("n", "<leader>n", "<cmd>NvimTreeToggle<CR>")
-vim.keymap.set("n", "<leader>nr", "<cmd>NvimTreeRefresh<CR>")
-vim.keymap.set("n", "<leader>nf", "<cmd>NvimTreeFindFile<CR>")
+vim.keymap.set("n", "<leader>n", "<cmd>Neotree toggle<CR>")
 
 -- Switch buffers
 vim.keymap.set("n", "<leader>j", "<C-W><C-J>")
@@ -74,7 +89,7 @@ local undo_mappings = {
 }
 
 -- Diagnostics
-vim.keymap.set("n", "<leader>d", "<cmd>lua vim.diagnostic.open_float()<CR>")
+vim.keymap.set("n", "<leader>df", "<cmd>lua vim.diagnostic.open_float()<CR>")
 vim.keymap.set("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>")
 vim.keymap.set("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>")
 
@@ -96,8 +111,8 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", "<leader>fo", function()
         vim.lsp.buf.format({ async = true })
     end, bufopts)
-    vim.keymap.set("n", "<leader>ls", require("telescope.builtin").lsp_document_symbols, bufopts)
-    vim.keymap.set("n", "<leader>ld", require("telescope.builtin").diagnostics, bufopts)
+    vim.keymap.set("n", "<leader>ds", require("telescope.builtin").lsp_document_symbols, bufopts)
+    vim.keymap.set("n", "<leader>dd", require("telescope.builtin").diagnostics, bufopts)
 
     -- unused
     -- vim.keymap.set('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', buffopts)
@@ -156,20 +171,20 @@ local gitsigns_on_attach = function(bufnr)
     end, { expr = true })
 
     -- Actions
-    map({ 'n', 'v' }, '<leader>hs', ':Gitsigns stage_hunk<CR>')
-    map({ 'n', 'v' }, '<leader>hr', ':Gitsigns reset_hunk<CR>')
-    map('n', '<leader>hS', gs.stage_buffer)
-    map('n', '<leader>hu', gs.undo_stage_hunk)
-    map('n', '<leader>hR', gs.reset_buffer)
-    map('n', '<leader>hp', gs.preview_hunk)
-    map('n', '<leader>hB', function() gs.blame_line { full = true } end)
-    map('n', '<leader>hb', gs.toggle_current_line_blame)
-    map('n', '<leader>hd', gs.diffthis)
-    map('n', '<leader>hD', function() gs.diffthis('~') end)
-    map('n', '<leader>ht', gs.toggle_deleted)
+    map({ 'n', 'v' }, '<leader>gs', ':Gitsigns stage_hunk<CR>')
+    map({ 'n', 'v' }, '<leader>gr', ':Gitsigns reset_hunk<CR>')
+    map('n', '<leader>gS', gs.stage_buffer)
+    map('n', '<leader>gu', gs.undo_stage_hunk)
+    map('n', '<leader>gR', gs.reset_buffer)
+    map('n', '<leader>gp', gs.preview_hunk)
+    map('n', '<leader>gB', function() gs.blame_line { full = true } end)
+    map('n', '<leader>gb', gs.toggle_current_line_blame)
+    map('n', '<leader>gd', gs.diffthis)
+    map('n', '<leader>gD', function() gs.diffthis('~') end)
+    map('n', '<leader>gt', gs.toggle_deleted)
 
     -- Text object
-    map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+    map({ 'o', 'x' }, 'ig', ':<C-U>Gitsigns select_hunk<CR>')
 end
 
 

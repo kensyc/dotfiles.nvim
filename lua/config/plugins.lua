@@ -1,15 +1,11 @@
-require('packer').startup(function(use)
-    -- Package manager
-    use 'wbthomason/packer.nvim'
-
+require('lazy').setup({
     -- Speed
-    use 'lewis6991/impatient.nvim'
-    use 'nathom/filetype.nvim'
+    { 'nathom/filetype.nvim' },
 
     -- LSP
-    use {
+    {
         'neovim/nvim-lspconfig',
-        requires = {
+        dependencies = {
             'williamboman/mason.nvim',
             'williamboman/mason-lspconfig.nvim',
 
@@ -20,12 +16,12 @@ require('packer').startup(function(use)
             'folke/neodev.nvim',
             'jose-elias-alvarez/null-ls.nvim'
         }
-    }
+    },
 
     -- Autocompletion
-    use {
+    {
         'hrsh7th/nvim-cmp',
-        requires = {
+        dependencies = {
             'hrsh7th/cmp-buffer',
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-cmdline',
@@ -34,59 +30,66 @@ require('packer').startup(function(use)
             'saadparwaiz1/cmp_luasnip',
             'rafamadriz/friendly-snippets'
         },
-    }
+    },
 
     -- Telescope
-    use {
+    {
         'nvim-telescope/telescope.nvim',
-        requires = {
+        dependencies = {
             'nvim-lua/plenary.nvim',
             'debugloop/telescope-undo.nvim'
         }
-    }
-    use { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' }
-    use { 'nvim-telescope/telescope-file-browser.nvim' }
+    },
+    { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+    { 'nvim-telescope/telescope-file-browser.nvim' },
 
     -- Treesitter
-    use {
+    {
         'nvim-treesitter/nvim-treesitter',
-        run = function()
+        build = function()
             require('nvim-treesitter.install').update({ with_sync = true })
         end,
-    }
+    },
 
-    use {
+    {
         'nvim-treesitter/nvim-treesitter-textobjects',
         after = 'nvim-treesitter',
-    }
+    },
 
     -- File tree
-    use { 'kyazdani42/nvim-tree.lua', requires = { 'kyazdani42/nvim-web-devicons' } }
+    {
+        'nvim-neo-tree/neo-tree.nvim',
+        dependencies = {
+            'nvim-lua/plenary.nvim',
+            'nvim-tree/nvim-web-devicons',
+            'MunifTanjim/nui.nvim',
+        }
+    },
 
     -- Themes
-    use { 'catppuccin/nvim', as = 'catppuccin' }
-    use 'navarasu/onedark.nvim'
-    use 'folke/tokyonight.nvim'
-    use 'nyoom-engineering/oxocarbon.nvim'
-    use { 'rose-pine/neovim', as = 'rose-pine' }
+    { 'catppuccin/nvim', name = 'catppuccin' },
+--    { 'navarasu/onedark.nvim' },
+--    { 'folke/tokyonight.nvim' },
+--    { 'nyoom-engineering/oxocarbon.nvim' },
+--    { 'rose-pine/neovim', name = 'rose-pine' },
 
     -- UI
-    use 'nvim-lualine/lualine.nvim'
-    use 'lukas-reineke/indent-blankline.nvim'
+    { 'lukas-reineke/indent-blankline.nvim' },
+    { 'nvim-lualine/lualine.nvim' },
 
     -- Git
-    use { 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' } }
+    { 'lewis6991/gitsigns.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
 
     -- validated untill here
     -- Utility
-    use 'numToStr/Comment.nvim'
-    use 'kylechui/nvim-surround'
-    use 'tpope/vim-repeat'
-    use 'ellisonleao/glow.nvim'
-    use { 'dccsillag/magma-nvim', run = ':UpdateRemotePlugins' }
+    { 'numToStr/Comment.nvim' },
+    { 'kylechui/nvim-surround' },
+    { 'tpope/vim-repeat' },
+    { 'ellisonleao/glow.nvim' },
+    { 'dccsillag/magma-nvim', build = ':UpdateRemotePlugins' },
 
     -- DB
-    use 'tpope/vim-dadbod'
-    use 'kristijanhusak/vim-dadbod-ui'
-    use 'kristijanhusak/vim-dadbod-completion'
-end)
+    { 'tpope/vim-dadbod' },
+    { 'kristijanhusak/vim-dadbod-ui' },
+    { 'kristijanhusak/vim-dadbod-completion' },
+})

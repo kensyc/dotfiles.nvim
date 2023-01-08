@@ -1,18 +1,18 @@
 -- Automatically run :PackerCompile whenever this file is updated
-local packer_group = vim.api.nvim_create_augroup(
-    'Packer',
-    { clear = true }
-)
-vim.api.nvim_create_autocmd(
-    {
-        'BufWritePost'
-    },
-    {
-        pattern = 'plugins.lua',
-        command = 'source <afile> | PackerCompile',
-        group = packer_group
-    }
-)
+-- local packer_group = vim.api.nvim_create_augroup(
+--     'Packer',
+--     { clear = true }
+-- )
+-- vim.api.nvim_create_autocmd(
+--     {
+--         'BufWritePost'
+--     },
+--     {
+--         pattern = 'plugins.lua',
+--         command = 'source <afile> | PackerCompile',
+--         group = packer_group
+--     }
+-- )
 
 
 -- local function get_reg(char)
