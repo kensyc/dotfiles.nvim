@@ -64,7 +64,7 @@ local sources = {
     null_ls.builtins.diagnostics.trail_space.with({ disabled_filetypes = { "markdown" } }),
     null_ls.builtins.diagnostics.yamllint,
     null_ls.builtins.diagnostics.php,
-    null_ls.builtins.diagnostics.phpcs,
+    null_ls.builtins.diagnostics.phpcs.with({ extra_args= { "--standard", "PSR12" } }),
     null_ls.builtins.diagnostics.phpstan,
     -- null_ls.builtins.diagnostics.ruff,
 
