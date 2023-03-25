@@ -26,6 +26,7 @@ vim.keymap.set("n", "N", "Nzzzv")
 
 -- Files tree keymaps
 vim.keymap.set("n", "<leader>n", "<cmd>Neotree toggle<CR>")
+vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
 
 -- Switch buffers
 vim.keymap.set("n", "<leader>j", "<C-W><C-J>")
@@ -44,9 +45,6 @@ vim.keymap.set("n", "<C-J>", "<C-W>+")
 vim.keymap.set("n", "<C-K>", "<C-W>-")
 vim.keymap.set("n", "<C-H>", "<C-W><")
 vim.keymap.set("n", "<C-L>", "<C-W>>")
-
--- go to definition in vsplit
-vim.keymap.set("n", "<C-w><C-d>", "<C-W><C-d><C-W>L")
 
 -- Treesitter keymaps
 local treesitter_keymaps = {
@@ -113,6 +111,9 @@ local on_attach = function(_, bufnr)
     end, bufopts)
     vim.keymap.set("n", "<leader>ds", require("telescope.builtin").lsp_document_symbols, bufopts)
     vim.keymap.set("n", "<leader>dd", require("telescope.builtin").diagnostics, bufopts)
+
+    -- go to definition in vsplit
+    vim.keymap.set("n", "<C-W><C-V>", "<C-W><C-V><C-W><C-L><cmd>lua vim.lsp.buf.definition()<CR>", bufopts)
 
     -- unused
     -- vim.keymap.set('n', '<leader>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', buffopts)

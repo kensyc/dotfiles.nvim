@@ -65,6 +65,7 @@ require('lazy').setup({
             'MunifTanjim/nui.nvim',
         }
     },
+    { 'stevearc/oil.nvim' },
 
     -- Themes
     { 'catppuccin/nvim', name = 'catppuccin' },
@@ -79,6 +80,7 @@ require('lazy').setup({
 
     -- Git
     { 'lewis6991/gitsigns.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
+    { 'sindrets/diffview.nvim', dependencies = { 'nvim-lua/plenary.nvim' } },
 
     -- validated untill here
     -- Utility
