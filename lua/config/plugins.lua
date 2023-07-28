@@ -1,6 +1,6 @@
 require('lazy').setup({
     -- Speed
-    { 'nathom/filetype.nvim' },
+    -- { 'nathom/filetype.nvim' },
 
     -- LSP
     {
@@ -10,7 +10,7 @@ require('lazy').setup({
             'williamboman/mason-lspconfig.nvim',
 
             -- LSP status updates
-            'j-hui/fidget.nvim',
+            {'j-hui/fidget.nvim', tag = 'legacy'},
 
             -- Additional lua configuration, makes nvim stuff amazing
             'folke/neodev.nvim',
