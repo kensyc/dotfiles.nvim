@@ -26,8 +26,11 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- Files tree keymaps
-vim.keymap.set("n", "<leader>n", "<cmd>Neotree toggle<CR>")
+vim.keymap.set("n", "<leader>n", "<cmd>Neotree filesystem reveal<CR>")
 vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
+vim.keymap.set("n", "_", "<cmd>Oil --float .<CR>")
+vim.keymap.set("n", "<leader>N", "<cmd>Neotree toggle reveal<CR>")
+
 
 -- Switch buffers
 vim.keymap.set("n", "<leader>j", "<C-W><C-J>")
@@ -42,10 +45,10 @@ vim.keymap.set("n", "<leader>L", "<cmd>+tabm<CR>") -- todo: add ability to posit
 vim.keymap.set("n", "<leader>H", "<cmd>-tabm<CR>")
 
 -- resize splits
-vim.keymap.set("n", "<C-J>", "<C-W>+")
-vim.keymap.set("n", "<C-K>", "<C-W>-")
-vim.keymap.set("n", "<C-H>", "<C-W><")
-vim.keymap.set("n", "<C-L>", "<C-W>>")
+vim.keymap.set("n", "<M-J>", "<C-W>+")
+vim.keymap.set("n", "<M-K>", "<C-W>-")
+vim.keymap.set("n", "<M-H>", "<C-W><")
+vim.keymap.set("n", "<M-L>", "<C-W>>")
 
 -- Treesitter keymaps
 local treesitter_keymaps = {
@@ -105,7 +108,7 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
-    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
+    -- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
     vim.keymap.set("n", "<leader>fo", function()
         vim.lsp.buf.format({ async = true })
@@ -122,33 +125,36 @@ local on_attach = function(_, bufnr)
     -- vim.keymap.set('n', '<leader>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', buffopts)
 end
 
+vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>")
+vim.keymap.set({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
+
 local cmp = require("cmp")
-local luasnip = require("luasnip")
 local cmp_keys = {
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
     ["<C-Space>"] = cmp.mapping.complete({}),
     ["<C-e>"] = cmp.mapping.abort(),
     ["<C-y>"] = cmp.mapping.confirm({ select = true, behavior = cmp.ConfirmBehavior.Replace }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    ["<C-j>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-            luasnip.expand_or_jump()
-        else
-            fallback()
-        end
-    end, { "i", "s" }),
-    ["<C-k>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-            luasnip.jump(-1)
-        else
-            fallback()
-        end
-    end, { "i", "s" }),
+    ["<C-n>"] = cmp.mapping.select_next_item({behavior = cmp.ConfirmBehavior.Replace}),
+    ["<C-p>"] = cmp.mapping.select_prev_item({behavior = cmp.ConfirmBehavior.Replace}),
 }
+
+local ls = require("luasnip")
+vim.keymap.set({ "i", "s" }, "<C-j>", function()
+  if ls.expand_or_jumpable() then
+    ls.expand_or_jump()
+  end
+end, { silent = true })
+vim.keymap.set({ "i", "s" }, "<C-k>", function()
+  if ls.jumpable(-1) then
+    ls.jump(-1)
+  end
+end, { silent = true })
+vim.keymap.set("i", "<C-l>", function()
+  if ls.choice_active() then
+    ls.change_choice(1)
+  end
+end)
 
 local gitsigns_on_attach = function(bufnr)
     local gs = package.loaded.gitsigns

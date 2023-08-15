@@ -48,8 +48,8 @@ local sources = {
     -- formatting
     null_ls.builtins.formatting.prettierd, -- todo: add prettier-php
     null_ls.builtins.formatting.shfmt,
-	null_ls.builtins.formatting.black.with({ extra_args = { "--fast", "--line-length", "79" } }),
-	null_ls.builtins.formatting.isort,
+	  null_ls.builtins.formatting.black.with({ extra_args = { "--fast", "--line-length", "79" } }),
+	  null_ls.builtins.formatting.isort,
     null_ls.builtins.formatting.phpcbf,
 
     -- code actions
@@ -65,12 +65,14 @@ local sources = {
     null_ls.builtins.diagnostics.yamllint,
     null_ls.builtins.diagnostics.php,
     null_ls.builtins.diagnostics.phpcs.with({ extra_args= { "--standard", "PSR12" } }),
-    null_ls.builtins.diagnostics.phpstan,
+    -- null_ls.builtins.diagnostics.phpstan,
     -- null_ls.builtins.diagnostics.ruff,
 
     -- hover
     null_ls.builtins.hover.printenv,
 
+    null_ls.builtins.formatting.phpcbf.with({ extra_args= { "--standard", "PSR12" } }),
+    null_ls.builtins.formatting.phpcsfixer,
     -- null_ls.builtins.formatting.xmlformater,
     -- null_ls.builtins.formatting.sql_formatter,
     -- null_ls.builtins.completion.luasnip,

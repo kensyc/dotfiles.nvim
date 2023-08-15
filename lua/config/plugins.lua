@@ -10,11 +10,20 @@ require('lazy').setup({
             'williamboman/mason-lspconfig.nvim',
 
             -- LSP status updates
-            {'j-hui/fidget.nvim', tag = 'legacy'},
+            { 'j-hui/fidget.nvim', tag = 'legacy' },
 
             -- Additional lua configuration, makes nvim stuff amazing
             'folke/neodev.nvim',
             'jose-elias-alvarez/null-ls.nvim'
+        }
+    },
+    {
+        "glepnir/lspsaga.nvim",
+        event = "LspAttach",
+        dependencies = {
+            {"nvim-tree/nvim-web-devicons"},
+            --Please make sure you install markdown and markdown_inline parser
+            {"nvim-treesitter/nvim-treesitter"}
         }
     },
 
