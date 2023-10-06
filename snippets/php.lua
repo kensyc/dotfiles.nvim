@@ -26,7 +26,7 @@ local parse = require("luasnip.util.parser").parse_snippet
 local ms = ls.multi_snippet
 
 local function get_namespaces(composer_config)
-  if type(composer_config) ~= 'string' then
+  if type(composer_config) ~= 'string' or composer_config == "" then
     return {}
   end
 

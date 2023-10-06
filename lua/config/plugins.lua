@@ -84,7 +84,7 @@ require('lazy').setup({
 --    { 'rose-pine/neovim', name = 'rose-pine' },
 
     -- UI
-    { 'lukas-reineke/indent-blankline.nvim' },
+    { 'lukas-reineke/indent-blankline.nvim', main = "ibl", opts = {} },
     { 'nvim-lualine/lualine.nvim' },
 
     -- Git
