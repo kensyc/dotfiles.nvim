@@ -17,6 +17,15 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 -- stay at start of the line after J (merges line below with current line)
 vim.keymap.set("n", "J", "mzJ`z")
 
+-- properly indent on empty line when insert
+vim.keymap.set("n", "i", function()
+  if #vim.fn.getline(".") == 0 then
+    return [["_cc]]
+  else
+    return "i"
+  end
+end, { expr = true, desc = "properly indent on empty line when insert" })
+
 -- center screen after scrolling or going through search results
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
