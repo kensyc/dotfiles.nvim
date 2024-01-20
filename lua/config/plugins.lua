@@ -98,6 +98,13 @@ require('lazy').setup({
     { 'tpope/vim-repeat' },
     { 'ellisonleao/glow.nvim' },
     { 'dccsillag/magma-nvim', build = ':UpdateRemotePlugins' },
+    {
+        'mikesmithgh/kitty-scrollback.nvim',
+        enabled = true,
+        lazy = true,
+        cmd = { 'KittyScrollbackGenerateKittens', 'KittyScrollbackCheckHealth' },
+        event = { 'User KittyScrollbackLaunch' }
+    },
 
     -- DB
     { 'tpope/vim-dadbod' },
