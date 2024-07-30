@@ -40,58 +40,67 @@ require("mason-lspconfig").setup_handlers({
     end,
 })
 require("fidget").setup()
-
-
-local null_ls = require("null-ls")
-
-local sources = {
-    -- formatting
-    null_ls.builtins.formatting.prettierd, -- todo: add prettier-php
-    null_ls.builtins.formatting.shfmt,
-	  null_ls.builtins.formatting.black.with({ extra_args = { "--fast", "--line-length", "79" } }),
-	  null_ls.builtins.formatting.isort,
-    null_ls.builtins.formatting.phpcbf,
-
-    -- code actions
-    null_ls.builtins.code_actions.gitsigns,
-
-    -- completion
-    null_ls.builtins.completion.spell,
-
-    --diagnostics
-    null_ls.builtins.diagnostics.hadolint, -- dockerfile lint
-    null_ls.builtins.diagnostics.todo_comments,
-    null_ls.builtins.diagnostics.trail_space.with({ disabled_filetypes = { "markdown" } }),
-    null_ls.builtins.diagnostics.yamllint,
-    null_ls.builtins.diagnostics.php,
-    null_ls.builtins.diagnostics.phpcs.with({ extra_args= { "--standard", "PSR12" } }),
-    -- null_ls.builtins.diagnostics.phpstan,
-    -- null_ls.builtins.diagnostics.ruff,
-
-    -- hover
-    null_ls.builtins.hover.printenv,
-
-    null_ls.builtins.formatting.phpcbf.with({ extra_args= { "--standard", "PSR12" } }),
-    null_ls.builtins.formatting.phpcsfixer,
-    -- null_ls.builtins.formatting.xmlformater,
-    -- null_ls.builtins.formatting.sql_formatter,
-    -- null_ls.builtins.completion.luasnip,
-	-- null_ls.builtins.formatting.stylua,
-    -- null_ls.builtins.diagnostics.codespell,
-    -- null_ls.builtins.diagnostics.markdownlint,
-    -- null_ls.builtins.diagnostics.shellcheck,
-    -- null_ls.builtins.diagnostics.zsh,
-    -- null_ls.builtins.diagnostics.twigcs,
-    -- null_ls.builtins.diagnostics.curlylint,
-    -- null_ls.builtins.diagnostics.luacheck,
-    -- null_ls.builtins.diagnostics.php,
-    -- null_ls.builtins.diagnostics.psalm,
-    -- null_ls.builtins.diagnostics.stylelint,
-    -- null_ls.builtins.hover.dictionary,
-    -- null_ls.builtins.diagnostics.mypy.with({ extra_args = { "--cache-dir", os.getenv("XDG_CACHE_HOME") .. "/mypy" } }), -- @todo: add env variable fallback
+require'lspconfig'.phpactor.setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+    init_options = {
+        ["language_server_phpstan.enabled"] = true,
+        ["language_server_psalm.enabled"] = false,
+        ["language_server_php_cs_fixer.enabled"] = true,
+    }
 }
 
-null_ls.setup({
-	sources = sources,
-	on_attach = on_attach,
-})
+
+-- local null_ls = require("null-ls")
+--
+-- local sources = {
+--     -- formatting
+--     null_ls.builtins.formatting.prettierd, -- todo: add prettier-php
+--     null_ls.builtins.formatting.shfmt,
+-- 	  null_ls.builtins.formatting.black.with({ extra_args = { "--fast", "--line-length", "79" } }),
+-- 	  null_ls.builtins.formatting.isort,
+--     null_ls.builtins.formatting.phpcbf,
+--
+--     -- code actions
+--     null_ls.builtins.code_actions.gitsigns,
+--
+--     -- completion
+--     null_ls.builtins.completion.spell,
+--
+--     --diagnostics
+--     null_ls.builtins.diagnostics.hadolint, -- dockerfile lint
+--     null_ls.builtins.diagnostics.todo_comments,
+--     null_ls.builtins.diagnostics.trail_space.with({ disabled_filetypes = { "markdown" } }),
+--     null_ls.builtins.diagnostics.yamllint,
+--     null_ls.builtins.diagnostics.php,
+--     null_ls.builtins.diagnostics.phpcs.with({ extra_args= { "--standard", "PSR12" } }),
+--     -- null_ls.builtins.diagnostics.phpstan,
+--     -- null_ls.builtins.diagnostics.ruff,
+--
+--     -- hover
+--     null_ls.builtins.hover.printenv,
+--
+--     null_ls.builtins.formatting.phpcbf.with({ extra_args= { "--standard", "PSR12" } }),
+--     null_ls.builtins.formatting.phpcsfixer,
+--     -- null_ls.builtins.formatting.xmlformater,
+--     -- null_ls.builtins.formatting.sql_formatter,
+--     -- null_ls.builtins.completion.luasnip,
+-- 	-- null_ls.builtins.formatting.stylua,
+--     -- null_ls.builtins.diagnostics.codespell,
+--     -- null_ls.builtins.diagnostics.markdownlint,
+--     -- null_ls.builtins.diagnostics.shellcheck,
+--     -- null_ls.builtins.diagnostics.zsh,
+--     -- null_ls.builtins.diagnostics.twigcs,
+--     -- null_ls.builtins.diagnostics.curlylint,
+--     -- null_ls.builtins.diagnostics.luacheck,
+--     -- null_ls.builtins.diagnostics.php,
+--     -- null_ls.builtins.diagnostics.psalm,
+--     -- null_ls.builtins.diagnostics.stylelint,
+--     -- null_ls.builtins.hover.dictionary,
+--     -- null_ls.builtins.diagnostics.mypy.with({ extra_args = { "--cache-dir", os.getenv("XDG_CACHE_HOME") .. "/mypy" } }), -- @todo: add env variable fallback
+-- }
+--
+-- null_ls.setup({
+-- 	sources = sources,
+-- 	on_attach = on_attach,
+-- })

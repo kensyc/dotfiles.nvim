@@ -113,14 +113,20 @@ local on_attach = function(_, bufnr)
     vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
     vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
     vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
-    vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
+    vim.keymap.set("n", "gc", vim.lsp.buf.implementation, bufopts)
     vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, bufopts)
     vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
     vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
     -- vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
     vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-    vim.keymap.set("n", "<leader>fo", function()
-        vim.lsp.buf.format({ async = true })
+    vim.keymap.set({"n", "v"}, "<leader>fo", function()
+       -- vim.lsp.buf.format({ async = true })
+       require("conform").format({
+          bufnr = bufnr,
+          asymc = true,
+          timeout_ms = 500,
+          lsp_fallback = true
+       })
     end, bufopts)
     vim.keymap.set("n", "<leader>ds", require("telescope.builtin").lsp_document_symbols, bufopts)
     vim.keymap.set("n", "<leader>dd", require("telescope.builtin").diagnostics, bufopts)

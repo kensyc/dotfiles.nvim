@@ -13,8 +13,7 @@ require('lazy').setup({
             { 'j-hui/fidget.nvim', tag = 'legacy' },
 
             -- Additional lua configuration, makes nvim stuff amazing
-            'folke/neodev.nvim',
-            'jose-elias-alvarez/null-ls.nvim'
+            'folke/neodev.nvim'
         }
     },
     {
@@ -25,6 +24,16 @@ require('lazy').setup({
             --Please make sure you install markdown and markdown_inline parser
             {"nvim-treesitter/nvim-treesitter"}
         }
+    },
+
+    -- formatting
+    {
+        'stevearc/conform.nvim'
+    },
+
+    -- linting
+    {
+        'mfussenegger/nvim-lint'
     },
 
     -- Autocompletion
